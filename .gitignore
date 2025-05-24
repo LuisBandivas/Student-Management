@@ -1,0 +1,92 @@
+# =========================
+# FRONTEND (React + Vite)
+# =========================
+# Node modules
+node_modules/
+
+# Production build output
+dist/
+
+# Vite cache
+.vite/
+
+# Environment variables
+.env
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# =========================
+# BACKEND (ASP.NET Core)
+# =========================
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# Secrets & config
+appsettings.*.json
+secrets.json
+
+# Entity Framework Migrations snapshot files (optional)
+Migrations/*Snapshot.cs
+
+# dotnet watch working directory
+**/tmp/
+
+# Rider IDE
+.idea/
+
+# Visual Studio
+.vs/
+
+# Recycle Bin of Visual Studio
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# =========================
+# OS-Specific
+# =========================
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
+# GIT
+# =========================
+# Git conflict files
+*.orig
+
+# =========================
+# OPTIONAL
+# =========================
+# Log files
+*.log
+logs/

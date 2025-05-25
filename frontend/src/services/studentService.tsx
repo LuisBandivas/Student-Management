@@ -1,7 +1,12 @@
 export interface StudentData {
-  fullname: string;
+  firstname: string;
+  lastname: string;
+  dob: string;
+  gender: string;
   email: string;
+  program: string;
   section: string;
+  yearLevel: string;
 }
 
 export const submitStudentData = async (data: StudentData) => {

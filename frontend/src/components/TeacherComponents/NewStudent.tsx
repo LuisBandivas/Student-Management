@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import type { StudentData } from "../services/studentService";
-import { submitStudentData } from "../services/studentService";
+import type { StudentData } from "../../services/studentService";
+import { submitStudentData } from "../../services/studentService";
 
-const Students: React.FC = () => {
+const NewStudent: React.FC = () => {
   const [studentData, setStudentData] = useState<StudentData>({
     fullname: "",
     email: "",
@@ -18,10 +18,8 @@ const Students: React.FC = () => {
     try {
       const result = await submitStudentData(studentData);
       console.log("Student data submitted successfully:", result);
-      alert("Student data submitted successfully!");
     } catch (error) {
       console.error("Error submitting student data:", error);
-      alert("Failed to submit student data. Please try again.");
     }
   };
 
@@ -63,4 +61,4 @@ const Students: React.FC = () => {
   );
 };
 
-export default Students;
+export default NewStudent;

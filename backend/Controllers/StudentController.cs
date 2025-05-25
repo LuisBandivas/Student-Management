@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using StudentManagementSystem.Data;
 using StudentManagementSystem.Models;
 using StudentManagementSystem.Services;
 

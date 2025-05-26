@@ -1,4 +1,4 @@
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 
 //Styles
@@ -58,8 +58,12 @@ const NewStudent: React.FC<NewStudentProps> = (props) => {
       yearLevel: data.yearlevel,
     };
 
-    await addNewStudent(formattedData);
-    reset();
+    try {
+      await addNewStudent(formattedData);
+      reset();
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
 
   useEffect(() => {

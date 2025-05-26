@@ -1,179 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NewStudent } from "../../components/TeacherComponents";
 
-const dummyData = [
-  {
-    id: 1,
-    name: "Alice Johnson",
-    dob: "2001-04-12",
-    program: "BS Computer Science",
-    section: "A",
-    yearLevel: "1st Year",
-  },
-  {
-    id: 2,
-    name: "Bob Smith",
-    dob: "2000-11-23",
-    program: "BS Information Technology",
-    section: "B",
-    yearLevel: "2nd Year",
-  },
-  {
-    id: 3,
-    name: "Carla Reyes",
-    dob: "1999-08-30",
-    program: "BS Information Systems",
-    section: "C",
-    yearLevel: "3rd Year",
-  },
-  {
-    id: 4,
-    name: "David Lee",
-    dob: "2002-03-15",
-    program: "BS Software Engineering",
-    section: "A",
-    yearLevel: "1st Year",
-  },
-  {
-    id: 5,
-    name: "Eva Green",
-    dob: "2001-01-10",
-    program: "BS Computer Engineering",
-    section: "B",
-    yearLevel: "4th Year",
-  },
-  {
-    id: 6,
-    name: "Frank Thomas",
-    dob: "2000-07-21",
-    program: "BS Computer Science",
-    section: "C",
-    yearLevel: "3rd Year",
-  },
-  {
-    id: 7,
-    name: "Grace Park",
-    dob: "1999-12-09",
-    program: "BS Information Technology",
-    section: "A",
-    yearLevel: "2nd Year",
-  },
-  {
-    id: 8,
-    name: "Henry Adams",
-    dob: "2001-05-25",
-    program: "BS Information Systems",
-    section: "B",
-    yearLevel: "1st Year",
-  },
-  {
-    id: 9,
-    name: "Ivy Brooks",
-    dob: "2002-06-14",
-    program: "BS Software Engineering",
-    section: "C",
-    yearLevel: "2nd Year",
-  },
-  {
-    id: 10,
-    name: "Jake Miller",
-    dob: "2000-10-03",
-    program: "BS Computer Engineering",
-    section: "A",
-    yearLevel: "4th Year",
-  },
-  {
-    id: 11,
-    name: "Kelly Martin",
-    dob: "2001-09-01",
-    program: "BS Computer Science",
-    section: "B",
-    yearLevel: "2nd Year",
-  },
-  {
-    id: 12,
-    name: "Liam Scott",
-    dob: "2002-02-20",
-    program: "BS Information Technology",
-    section: "C",
-    yearLevel: "3rd Year",
-  },
-  {
-    id: 13,
-    name: "Mia Turner",
-    dob: "2001-07-19",
-    program: "BS Information Systems",
-    section: "A",
-    yearLevel: "1st Year",
-  },
-  {
-    id: 14,
-    name: "Noah Wright",
-    dob: "1999-03-04",
-    program: "BS Software Engineering",
-    section: "B",
-    yearLevel: "4th Year",
-  },
-  {
-    id: 15,
-    name: "Olivia Young",
-    dob: "2000-08-08",
-    program: "BS Computer Engineering",
-    section: "C",
-    yearLevel: "2nd Year",
-  },
-  {
-    id: 16,
-    name: "Paul Walker",
-    dob: "2001-06-22",
-    program: "BS Computer Science",
-    section: "A",
-    yearLevel: "3rd Year",
-  },
-  {
-    id: 17,
-    name: "Quinn Hall",
-    dob: "2002-11-11",
-    program: "BS Information Technology",
-    section: "B",
-    yearLevel: "1st Year",
-  },
-  {
-    id: 18,
-    name: "Rachel King",
-    dob: "2000-12-15",
-    program: "BS Information Systems",
-    section: "C",
-    yearLevel: "2nd Year",
-  },
-  {
-    id: 19,
-    name: "Sam Lopez",
-    dob: "1999-10-26",
-    program: "BS Software Engineering",
-    section: "A",
-    yearLevel: "4th Year",
-  },
-  {
-    id: 20,
-    name: "Tina Harris",
-    dob: "2001-03-17",
-    program: "BS Computer Engineering",
-    section: "B",
-    yearLevel: "3rd Year",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { fetchStudents } from "../../Slices/StudentSlice";
+import type { RootState, AppDispatch } from "../../Store/Store";
 
 const Students: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { students, loading, error } = useSelector(
+    (state: RootState) => state.students
+  );
+
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [openNewStudent, setOpenNewStudent] = useState<boolean>(false);
+
+  useEffect(() => {
+    dispatch(fetchStudents());
+  }, [dispatch]);
 
   const toggleNewStudentModal = () => setOpenNewStudent(!openNewStudent);
 
   const itemsPerPage = 10;
   const maxPageButtons = 4;
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
-  const currentData = dummyData.slice(
+  const totalPages = Math.ceil(students.length / itemsPerPage);
+  const currentData = students.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -215,55 +65,65 @@ const Students: React.FC = () => {
           </button>
         </header>
         <div className="flex-1 overflow-y-auto">
-          <table className="min-w-full table-auto border-collapse text-f-dark overflow-x-auto font-Poppins">
-            <thead className="h-12 text-gray-500 text-p-sm">
-              <tr>
-                <th className="pl-4 flex-1 text-start bg-gray-200 rounded-tl-md border-b text-nowrap">
-                  ID NO
-                </th>
-                <th className="pl-4 flex-1 text-start bg-gray-200 border-b text-nowrap">
-                  STUDENT NAME
-                </th>
-                <th className="pl-4 flex-1 text-start bg-gray-200 border-b text-nowrap">
-                  DATE OF BIRTH
-                </th>
-                <th className="pl-4 flex-1 text-start bg-gray-200 border-b text-nowrap">
-                  PROGRAM
-                </th>
-                <th className="pl-4 flex-1 text-start bg-gray-200 border-b text-nowrap">
-                  SECTION
-                </th>
-                <th className="pl-4 flex-1 text-start bg-gray-200 border-b text-nowrap">
-                  YEAR LEVEL
-                </th>
-                <th className="pl-4 flex-1 text-start bg-gray-200 rounded-tr-md border-b text-nowrap">
-                  ACTION
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentData.map((student, index) => (
-                <tr
-                  key={index}
-                  className={`h-16 font-medium ${
-                    index % 10 === 0 ? "border-b" : ""
-                  }`}
-                >
-                  <td className="pl-4 flex-1">{student.id}</td>
-                  <td className="pl-4 flex-1">{student.name}</td>
-                  <td className="pl-4 flex-1">{student.dob}</td>
-                  <td className="pl-4 flex-1">{student.program}</td>
-                  <td className="pl-4 flex-1">{student.section}</td>
-                  <td className="pl-4 flex-1">{student.yearLevel}</td>
-                  <td className="pl-4 flex-1">
-                    <button>...</button>
-                  </td>
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p className="text-red-500">{error}</p>
+          ) : (
+            <table className="min-w-full table-auto border-collapse text-f-dark overflow-x-auto font-Poppins">
+              <thead className="h-12 text-gray-500 text-p-sm">
+                <tr>
+                  <th className="pl-4 flex-1 text-start bg-gray-200 rounded-tl-md border-b text-nowrap">
+                    STUDENT NO
+                  </th>
+                  <th className="pl-4 flex-1 text-start bg-gray-200 border-b text-nowrap">
+                    STUDENT NAME
+                  </th>
+                  <th className="pl-4 flex-1 text-start bg-gray-200 border-b text-nowrap">
+                    DATE OF BIRTH
+                  </th>
+                  <th className="pl-4 flex-1 text-start bg-gray-200 border-b text-nowrap">
+                    PROGRAM
+                  </th>
+                  <th className="pl-4 flex-1 text-start bg-gray-200 border-b text-nowrap">
+                    SECTION
+                  </th>
+                  <th className="pl-4 flex-1 text-start bg-gray-200 border-b text-nowrap">
+                    YEAR LEVEL
+                  </th>
+                  <th className="pl-4 flex-1 text-start bg-gray-200 rounded-tr-md border-b text-nowrap">
+                    ACTION
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {currentData.map((student, index) => (
+                  <tr
+                    key={index}
+                    className={`h-16 font-medium ${
+                      index % 10 === 0 ? "border-b" : ""
+                    }`}
+                  >
+                    <td className="pl-4 flex-1">{student.studentId}</td>
+                    <td className="pl-4 flex-1">
+                      {student.firstname + " " + student.lastname}
+                    </td>
+                    <td className="pl-4 flex-1">{student.dob}</td>
+                    <td className="pl-4 flex-1">{student.program}</td>
+                    <td className="pl-4 flex-1">{student.section}</td>
+                    <td className="pl-4 flex-1">{student.yearLevel}</td>
+                    <td className="pl-4 flex-1">
+                      <button>...</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
+
+      {/* Pagination */}
       <div className="flex justify-center">
         <button
           onClick={() => handlePageChange(currentPage - 1)}

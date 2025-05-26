@@ -1,3 +1,4 @@
+import axios from "axios";
 export interface StudentData {
   firstname: string;
   lastname: string;
@@ -10,17 +11,43 @@ export interface StudentData {
 }
 
 export const submitStudentData = async (data: StudentData) => {
-  const response = await fetch("http://localhost:5065/api/students", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to submit student data");
+  try {
+    const response = await axios.post(
+      "http://localhost:5065/api/students",
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("Student added:", response.data);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const message =
+        error.response?.data?.message ||
+        error.response?.data ||
+        error.message ||
+        "An unknown error occurred";
+      throw new Error(`Failed to submit student data: ${message}`);
+    }
   }
+};
 
-  return await response.json();
+export const displayAllStudent = async () => {
+  try {
+    const response = await axios.get("http://localhost:5065/api/students");
+    console.log("All students:", response.data);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const message =
+        error.response?.data?.message ||
+        error.response?.data ||
+        error.message ||
+        "An unknown error occurred";
+      throw new Error(`Failed to fetch student data: ${message}`);
+    }
+  }
 };

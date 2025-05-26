@@ -7,7 +7,7 @@ namespace StudentManagementSystem.Models
     {
         public int Id { get; set; }
         
-        [MaxLength(11)]
+        [MaxLength(50)]
         public string StudentId { get; set; } = string.Empty;
 
         [MaxLength(50)]

@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import Store from "./Store/Store";
 
 import { MainPage } from "./pages";
 // Authentication Pages
@@ -29,7 +31,9 @@ function App() {
 
   return (
     <div className="text-f-dark font-Poppins">
-      <AppRoute />
+      <Provider store={Store}>
+        <AppRoute />
+      </Provider>
     </div>
   );
 }

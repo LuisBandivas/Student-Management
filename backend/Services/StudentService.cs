@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using StudentManagementSystem.Models;
 using StudentManagementSystem.Data;
 using StudentManagementSystem.Helper;
@@ -11,7 +10,7 @@ namespace StudentManagementSystem.Services
         private readonly AppDbContext _context = null!;
         private readonly IEmailService _emailService;
 
-        public StudentService(AppDbContext context,  IEmailService emailService)
+        public StudentService(AppDbContext context, IEmailService emailService)
         {
             _context = context;
             _emailService = emailService;
@@ -19,31 +18,22 @@ namespace StudentManagementSystem.Services
 
         public async Task<Student> AddStudentAsync(Student dto)
         {
-            var lastStudent = await _context.Students
-                .OrderByDescending(s => s.Id)
-                .FirstOrDefaultAsync();
+            // Check if the email are already existing
+            var emailToCheck = dto.Email.Trim().ToLower();
+            var existingEmail = await _context.Students
+                .FirstOrDefaultAsync(s => s.Email == emailToCheck);
 
-            int lastNumber = 0;
-
-            if (lastStudent != null && !string.IsNullOrWhiteSpace(lastStudent.StudentId))
+            if (existingEmail != null)
             {
-                var parts = lastStudent.StudentId.Split('-');
-                if (parts.Length == 2 && int.TryParse(parts[1], out int parsed))
-                {
-                    lastNumber = parsed;
-                }
+                throw new InvalidOperationException("A student with this email already exist");
             }
 
-            int newIdNumber = lastNumber + 1;
-            string newStudentId = $"000-{newIdNumber.ToString().PadLeft(3, '0')}";
-
-            // Generate Randowm Password
-            var initialPassword = GeneratePassword.GenerateRandomPassword(8);
-            var passwordHasher = new PasswordHasher<Student>();
+            // Generating Random w/ Hashing Password
+            var (initialPassword, hashedPassword) = GeneratePassword.GenerateAndHashPassword(8);
 
             var student = new Student
             {
-                StudentId = newIdNumber.ToString(),
+                StudentId = await GenerateStudentID(),
                 Firstname = dto.Firstname,
                 Lastname = dto.Lastname,
                 Dob = dto.Dob,
@@ -52,19 +42,63 @@ namespace StudentManagementSystem.Services
                 Program = dto.Program,
                 Section = dto.Section,
                 YearLevel = dto.YearLevel,
-                Password = passwordHasher.HashPassword(null, initialPassword)
+                Password = hashedPassword,
             };
 
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
 
-            await _emailService.SendEmailAsync(
-                dto.Email,
-                "Your Student Account Details",
-                $"Hi {dto.Firstname},\n\nYour account has been created.\nStudent ID: {newStudentId}\nPassword: {initialPassword}\n\nPlease change your password after logging in."
-            );
+            // Sending Intial password to email
+            await SendCredentialToEmail(student, initialPassword);
 
             return student;
+        }
+
+        public async Task<IEnumerable<Student>> GetAllStudentsAsync()
+        {
+            return await _context.Students.ToListAsync();
+        }
+
+        private async Task SendCredentialToEmail(Student student, string intialPass)
+        {
+            string subject = "Your account Login Credential";
+            string body = $@"
+                Hi, {student.Firstname},
+                
+                Your account has been created.
+                
+                StudentID: {student.StudentId}
+                Password: {intialPass}
+
+                Please change your password after logging in.
+            ";
+
+            await _emailService.SendEmailAsync(student.Email, subject, body);
+        }
+
+        private async Task<string> GenerateStudentID()
+        {
+            var year = DateTime.UtcNow.Year.ToString();
+
+            var latestStud = await _context.Students
+                .Where(s => s.StudentId.StartsWith(year))
+                .OrderByDescending(s => s.StudentId)
+                .FirstOrDefaultAsync();
+
+            int nextIdNo = 1;
+
+            if (latestStud != null)
+            {
+                var latestID = latestStud.StudentId;
+                var part = latestID.Split('-');
+                if (part.Length == 2 && int.TryParse(part[1], out int currentNum))
+                {
+                    nextIdNo = currentNum + 1;
+                }
+            }
+
+            string newStudentId = $"{year}-{nextIdNo.ToString("D5")}";
+            return newStudentId;
         }
     }
 }

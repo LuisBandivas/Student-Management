@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 //Styles
 import { Input } from "../../assets/design/InputStyle";
-import { Select } from "../../assets/design/SelectStyle";
+import { SelectWithValidation } from "../../assets/design/SelectStyle";
 
 //Validation
 import { useForm } from "react-hook-form";
@@ -12,7 +12,9 @@ import * as yup from "yup";
 
 //Hooks
 import { useNewStudentHook } from "../../hooks/useNewStudent";
-import Loader from "../Loader";
+
+//Components
+import { Loader } from "../index";
 
 // Define the validation schema using Yup
 const studentSchema = yup.object().shape({
@@ -133,7 +135,7 @@ const NewStudent: React.FC<NewStudentProps> = (props) => {
                 <p className="text-p-sm font-medium">Gender</p>
                 <select
                   {...register("gender")}
-                  className={Select(!!errors.gender)}
+                  className={SelectWithValidation(!!errors.gender)}
                 >
                   <option value="" disabled>
                     Select Gender
@@ -165,7 +167,7 @@ const NewStudent: React.FC<NewStudentProps> = (props) => {
                 <p className="text-p-sm font-medium">Program</p>
                 <select
                   {...register("program")}
-                  className={Select(!!errors.program)}
+                  className={SelectWithValidation(!!errors.program)}
                 >
                   <option value="" disabled>
                     Select Program
@@ -188,7 +190,7 @@ const NewStudent: React.FC<NewStudentProps> = (props) => {
                   <p className="text-p-sm font-medium">Section</p>
                   <select
                     {...register("section")}
-                    className={Select(!!errors.section)}
+                    className={SelectWithValidation(!!errors.section)}
                   >
                     <option value="" disabled>
                       Select Section
@@ -206,7 +208,7 @@ const NewStudent: React.FC<NewStudentProps> = (props) => {
                   <p className="text-p-sm font-medium">Year Level</p>
                   <select
                     {...register("yearlevel")}
-                    className={Select(!!errors.yearlevel)}
+                    className={SelectWithValidation(!!errors.yearlevel)}
                   >
                     <option value="" disabled>
                       Select Year Level

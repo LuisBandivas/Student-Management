@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchStudents } from "../../Slices/StudentSlice";
 import type { RootState, AppDispatch } from "../../Store/Store";
 
+import { Loader } from "../../components/index";
+
 const Students: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { students, loading, error } = useSelector(
@@ -66,7 +68,7 @@ const Students: React.FC = () => {
         </header>
         <div className="flex-1 overflow-y-auto">
           {loading ? (
-            <p>Loading...</p>
+            <Loader description="Fetching student data, Please wait..." />
           ) : error ? (
             <p className="text-red-500">{error}</p>
           ) : (

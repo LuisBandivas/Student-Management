@@ -6,8 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers(); // Enables controller support
+
+// Students Service
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
+
+// Subjects Service
+builder.Services.AddScoped<ISubjectService, SubjectService>();
 
 // Add CORS (place here)
 builder.Services.AddCors(options =>

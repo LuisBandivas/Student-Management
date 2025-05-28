@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { displayAllStudent } from "../services/studentService";
 
 interface StudentData {
+  Id: number;
   studentId?: string;
   firstname: string;
   lastname: string;

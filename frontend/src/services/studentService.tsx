@@ -1,5 +1,8 @@
 import axios from "axios";
+import { handleAxiosError } from "../helper/handleAxiosError";
 export interface StudentData {
+  Id: number;
+  studentId?: string;
   firstname: string;
   lastname: string;
   dob: string;
@@ -24,14 +27,7 @@ export const submitStudentData = async (data: StudentData) => {
     console.log("Student added:", response.data);
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const message =
-        error.response?.data?.message ||
-        error.response?.data ||
-        error.message ||
-        "An unknown error occurred";
-      throw new Error(`Failed to submit student data: ${message}`);
-    }
+    handleAxiosError(error, "Failed to submit student data");
   }
 };
 
@@ -41,13 +37,6 @@ export const displayAllStudent = async () => {
     console.log("All students:", response.data);
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const message =
-        error.response?.data?.message ||
-        error.response?.data ||
-        error.message ||
-        "An unknown error occurred";
-      throw new Error(`Failed to fetch student data: ${message}`);
-    }
+    handleAxiosError(error, "Failed to fetch student data");
   }
 };

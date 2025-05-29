@@ -1,18 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { displayAllStudent } from "../services/studentService";
 
-interface StudentData {
-  Id: number;
-  studentId?: string;
-  firstname: string;
-  lastname: string;
-  dob: string;
-  gender: string;
-  email: string;
-  program: string;
-  section: string;
-  yearLevel: string;
-}
+import type { StudentData } from "../types/TeacherTypes";
 
 interface StudentsState {
   students: StudentData[];

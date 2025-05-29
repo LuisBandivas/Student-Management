@@ -2,7 +2,7 @@ import axios from "axios";
 import { handleAxiosError } from "../helper/handleAxiosError";
 
 export interface SubjectData {
-  Id: number;
+  id: number;
   courseCode: string;
   courseName: string;
   courseDescription: string;

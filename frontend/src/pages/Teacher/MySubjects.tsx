@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Redux Imports
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +13,8 @@ import { SelectStyle } from "../../assets/design/SelectStyle";
 import { SubjectCard, AddSubject } from "../../components/TeacherComponents";
 import { Loader } from "../../components/index";
 
-const MySubjects = () => {
+const MySubjects: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { subjects, loading, error } = useSelector(
     (state: RootState) => state.subjects
@@ -26,6 +28,10 @@ const MySubjects = () => {
 
   const toggleNewSubject = () => {
     setAddSubjectModal(!addSubjectModal);
+  };
+
+  const handleCardClick = (id: number) => {
+    navigate(`/mysubjects/${id}`);
   };
 
   return (
@@ -56,7 +62,11 @@ const MySubjects = () => {
       ) : (
         <div className="flex-1 grid grid-cols-5 gap-5 overflow-y-auto">
           {subjects.map((subject) => (
-            <SubjectCard key={subject.Id} data={subject} />
+            <SubjectCard
+              key={subject.id}
+              data={subject}
+              onClick={handleCardClick}
+            />
           ))}
         </div>
       )}

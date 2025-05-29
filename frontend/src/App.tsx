@@ -6,7 +6,13 @@ import { MainPage } from "./pages";
 // Authentication Pages
 import { AuthPage, Login, Signup } from "./pages/Authentication";
 //Teacher Pages
-import { Dashboard, Students, MySubjects, Schedule } from "./pages/Teacher";
+import {
+  Dashboard,
+  Students,
+  MySubjects,
+  Schedule,
+  ViewSubject,
+} from "./pages/Teacher";
 
 function App() {
   const AppRoute = () => {
@@ -22,6 +28,7 @@ function App() {
         <Route path="/" element={<MainPage />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="mysubjects" element={<MySubjects />} />
+          <Route path="mysubjects/:subjectId" element={<ViewSubject />} />
           <Route path="students" element={<Students />} />
           <Route path="schedule" element={<Schedule />} />
         </Route>

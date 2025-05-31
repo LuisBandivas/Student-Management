@@ -6,5 +6,6 @@ namespace StudentManagementSystem.Services
     {
         Task<Student> AddStudentAsync(Student dto);
         Task<IEnumerable<Student>> GetAllStudentsAsync();
+        Task EnrollStudentInSubjectAsync(int studentId, int subjectId);
     }
 }

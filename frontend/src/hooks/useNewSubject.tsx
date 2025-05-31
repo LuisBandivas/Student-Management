@@ -1,8 +1,10 @@
 import { useState } from "react";
 
 // Services
-import type { SubjectData } from "../services/subjectService";
 import { submitSubjectData } from "../services/subjectService";
+
+// Types
+import type { SubjectData } from "../types/TeacherTypes";
 
 export const useNewSubjectHook = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

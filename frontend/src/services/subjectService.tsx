@@ -1,12 +1,6 @@
 import axios from "axios";
 import { handleAxiosError } from "../helper/handleAxiosError";
-
-export interface SubjectData {
-  id: number;
-  courseCode: string;
-  courseName: string;
-  courseDescription: string;
-}
+import type { SubjectData } from "../types/TeacherTypes";
 
 export const submitSubjectData = async (data: SubjectData) => {
   try {

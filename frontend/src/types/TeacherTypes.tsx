@@ -1,6 +1,6 @@
 export interface StudentData {
-  id: number;
-  studentId?: string;
+  id?: number;
+  schoolId?: string;
   firstname: string;
   lastname: string;
   dob: string;
@@ -9,4 +9,11 @@ export interface StudentData {
   program: string;
   section: string;
   yearLevel: string;
+}
+
+export interface SubjectData {
+  id?: number;
+  courseCode: string;
+  courseName: string;
+  courseDescription: string;
 }

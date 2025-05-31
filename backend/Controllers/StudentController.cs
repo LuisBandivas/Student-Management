@@ -13,7 +13,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Student>> Post(Student dto)
+    public async Task<ActionResult<Student>> Post([FromBody] Student dto)
     {
         try
         {
@@ -34,9 +34,23 @@ public class StudentController : ControllerBase
     public async Task<ActionResult<IEnumerable<Student>>> GetAll()
     {
         try
-        {                                      
+        {
             var student = await _studentService.GetAllStudentsAsync();
             return Ok(student);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An unexpected error occurred." });
+        }
+    }
+
+    [HttpPost("enroll")]
+    public async Task<ActionResult> EnrollStudentInSubject([FromQuery] int studentId, [FromQuery] int subjectId)
+    {
+        try
+        {
+            await _studentService.EnrollStudentInSubjectAsync(studentId, subjectId);
+            return Ok(new { message = "Student enrolled successfully." });
         }
         catch (Exception ex)
         {

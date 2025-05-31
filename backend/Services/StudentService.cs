@@ -33,7 +33,7 @@ namespace StudentManagementSystem.Services
 
             var student = new Student
             {
-                StudentId = await GenerateStudentID(),
+                SchoolId = await GenerateStudentID(),
                 Firstname = dto.Firstname,
                 Lastname = dto.Lastname,
                 Dob = dto.Dob,
@@ -67,7 +67,7 @@ namespace StudentManagementSystem.Services
                 
                 Your account has been created.
                 
-                StudentID: {student.StudentId}
+                StudentID: {student.SchoolId}
                 Password: {intialPass}
 
                 Please change your password after logging in.
@@ -81,15 +81,15 @@ namespace StudentManagementSystem.Services
             var year = DateTime.UtcNow.Year.ToString();
 
             var latestStud = await _context.Students
-                .Where(s => s.StudentId.StartsWith(year))
-                .OrderByDescending(s => s.StudentId)
+                .Where(s => s.SchoolId.StartsWith(year))
+                .OrderByDescending(s => s.SchoolId)
                 .FirstOrDefaultAsync();
 
             int nextIdNo = 1;
 
             if (latestStud != null)
             {
-                var latestID = latestStud.StudentId;
+                var latestID = latestStud.SchoolId;
                 var part = latestID.Split('-');
                 if (part.Length == 2 && int.TryParse(part[1], out int currentNum))
                 {
@@ -99,6 +99,34 @@ namespace StudentManagementSystem.Services
 
             string newStudentId = $"{year}-{nextIdNo.ToString("D5")}";
             return newStudentId;
+        }
+
+        public async Task EnrollStudentInSubjectAsync(int studentId, int subjectId)
+        {
+            var student = await _context.Students.FindAsync(studentId);
+            var subject = await _context.Subjects.FindAsync(subjectId);
+
+            if (student == null || subject == null)
+            {
+                throw new InvalidOperationException("Student or Subject not found.");
+            }
+
+            var existingEnrollment = await _context.StudentPerSubjects
+                .FirstOrDefaultAsync(sp => sp.StudentId == studentId && sp.SubjectId == subjectId);
+
+            if (existingEnrollment != null)
+            {
+                throw new InvalidOperationException("Student is already enrolled in this subject.");
+            }
+
+            var studentPerSubject = new StudentPerSubject
+            {
+                StudentId = studentId,
+                SubjectId = subjectId
+            };
+
+            _context.StudentPerSubjects.Add(studentPerSubject);
+            await _context.SaveChangesAsync();
         }
     }
 }

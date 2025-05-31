@@ -65,6 +65,7 @@ const NewStudent: React.FC<NewStudentProps> = (props) => {
       reset();
     } catch (error: any) {
       console.log(error.message);
+      console.log("Formatted Data:", formattedData);
     }
   };
 

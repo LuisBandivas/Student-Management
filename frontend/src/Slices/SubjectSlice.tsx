@@ -1,13 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { displaySubjects } from "../services/subjectService";
 
-interface SubjectData {
-  id: number;
-  courseCode: string;
-  courseName: string;
-  courseDescription: string;
-}
-
+import type { SubjectData } from "../types/TeacherTypes";
 interface SubjecstState {
   subjects: SubjectData[];
   loading: boolean;

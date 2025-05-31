@@ -8,12 +8,13 @@ namespace StudentManagementSystem.Models
 
         [MaxLength(50)]
         public string CourseCode { get; set; } = string.Empty;
-        
+
         [MaxLength(50)]
         public string CourseName { get; set; } = string.Empty;
 
         [MaxLength(50)]
         public string CourseDescription { get; set; } = string.Empty;
 
+        public ICollection<StudentPerSubject> StudentSubjects { get; set; } = new List<StudentPerSubject>();
     }
 } 

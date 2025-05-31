@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 //Services
-import type { StudentData } from "../services/studentService";
+import type { StudentData } from "../types/TeacherTypes";
 import { submitStudentData } from "../services/studentService";
 
 export const useNewStudentHook = () => {

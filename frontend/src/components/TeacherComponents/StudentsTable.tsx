@@ -58,7 +58,7 @@ const StudentsTable: React.FC<StudentsTableProps> = ({ students }) => {
                   index % 10 === 0 ? "border-b" : ""
                 }`}
               >
-                <td className="pl-4 flex-1">{student.studentId}</td>
+                <td className="pl-4 flex-1">{student.schoolId}</td>
                 <td className="pl-4 flex-1">
                   {student.firstname + " " + student.lastname}
                 </td>

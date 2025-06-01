@@ -21,7 +21,7 @@ export const fetchStudents = createAsyncThunk("students/fetchAll", async () => {
 });
 
 const StudentSlice = createSlice({
-  name: "students",
+  name: "studentsPerSubject",
   initialState,
   reducers: {
     clearStudents: (state) => {

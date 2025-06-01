@@ -30,3 +30,15 @@ export const displayAllStudent = async () => {
     handleAxiosError(error, "Failed to fetch student data");
   }
 };
+
+export const displayStudentToSubject = async (subjectId: number) => {
+  try {
+    const response = await axios.get(
+      "http://localhost:5065/api/students/subject/" + subjectId
+    );
+    console.log("Students for subject:", response.data);
+    return response.data;
+  } catch (error) {
+    handleAxiosError(error, "Failed to fetch students for subject");
+  }
+};

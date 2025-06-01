@@ -14,7 +14,7 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ data, onClick }) => {
   return (
     <div
       onClick={() => onClick(data.id)}
-      className="w-[300px] h-[300px] border bg-white rounded-lg p-4 shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl cursor-pointer"
+      className="w-full aspect-square border bg-white rounded-lg p-4 shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl cursor-pointer"
     >
       <div className="flex flex-col h-full">
         <div className="w-full h-2/6">

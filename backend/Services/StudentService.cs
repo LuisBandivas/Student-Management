@@ -128,5 +128,14 @@ namespace StudentManagementSystem.Services
             _context.StudentPerSubjects.Add(studentPerSubject);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Student>> GetStudentsBySubjectAsync(int subjectId)
+        {
+            return await _context.StudentPerSubjects
+                .Where(sp => sp.SubjectId == subjectId)
+                .Include(sp => sp.Student)
+                .Select(sp => sp.Student)
+                .ToListAsync();
+        }
     }
 }

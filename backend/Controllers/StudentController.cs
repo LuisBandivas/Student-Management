@@ -44,6 +44,20 @@ public class StudentController : ControllerBase
         }
     }
 
+    [HttpGet("subject/{subjectId}")]
+    public async Task<ActionResult> GetStudentsBySubject(int subjectId)
+    {
+        try
+        {
+            var students = await _studentService.GetStudentsBySubjectAsync(subjectId);
+            return Ok(students);
+        }
+        catch(Exception ex)
+        {
+            return StatusCode(500, new { message = "An unexpected error occurred." });
+        }
+    }
+
     [HttpPost("enroll")]
     public async Task<ActionResult> EnrollStudentInSubject([FromQuery] int studentId, [FromQuery] int subjectId)
     {

@@ -10,13 +10,21 @@ import type { RootState, AppDispatch } from "../../Store/Store";
 import { Loader } from "../../components/index";
 import { StudentsTable } from "../../components/TeacherComponents";
 
+// Styles
+import { SearchInput } from "../../assets/design/InputStyle";
+
+// Icons
+import { IoSearch } from "react-icons/io5";
+
 const ViewSubject: React.FC = () => {
   const { subjectId } = useParams<{ subjectId: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const { studentsPerSubject, loading, error } = useSelector(
     (state: RootState) => state.studentsPerSubject
   );
-  console.log("Subject ID:", subjectId);
+
+  const { default: defaultStyle, icon: iconStyle } = SearchInput;
+
   useEffect(() => {
     dispatch(fetchStudentsPerSubject(parseInt(subjectId || "0")));
   }, [dispatch, subjectId]);
@@ -27,14 +35,15 @@ const ViewSubject: React.FC = () => {
         <button onClick={() => window.history.back()}>
           <span className="w-6 h-6 rounded-md bg-red-400"></span>Go Back
         </button>
-        <section className="flex items-center gap-3">
+        <div className="w-[300px] h-fit relative">
           <input
             type="text"
             name="students"
-            className="w-[300px] h-fit px-4 py-3 border rounded-md"
-            placeholder="Search Students"
+            className={defaultStyle}
+            placeholder="Search students"
           />
-        </section>
+          <IoSearch size={24} className={iconStyle} />
+        </div>
       </header>
       <div className="flex-1 flex flex-col gap-3 bg-slate-50 rounded-lg p-4 shadow-sm shadow-slate-200 overflow-hidden">
         <header className="w-full h-fit flex flex-row items-center justify-between">

@@ -10,6 +10,12 @@ import type { RootState, AppDispatch } from "../../Store/Store";
 import { Loader } from "../../components/index";
 import { StudentsTable } from "../../components/TeacherComponents";
 
+// Styles
+import { SearchInput } from "../../assets/design/InputStyle";
+
+// Icons
+import { IoSearch } from "react-icons/io5";
+
 const Students: React.FC = () => {
   const [openNewStudent, setOpenNewStudent] = useState<boolean>(false);
 
@@ -17,6 +23,8 @@ const Students: React.FC = () => {
   const { students, loading, error } = useSelector(
     (state: RootState) => state.students
   );
+
+  const { default: defaultStyle, icon: iconStyle } = SearchInput;
 
   useEffect(() => {
     dispatch(fetchStudents());
@@ -29,17 +37,19 @@ const Students: React.FC = () => {
       <header className="flex flex-row items-center justify-between">
         <p>Students Information</p>
         <section className="flex items-center gap-3">
-          <input
-            type="text"
-            name="students"
-            className="w-[300px] h-fit px-4 py-3 border rounded-md"
-            placeholder="Search Students"
-          />
+          <div className="w-[300px] h-fit relative">
+            <input
+              type="text"
+              name="students"
+              className={defaultStyle}
+              placeholder="Search Students"
+            />
+            <IoSearch size={24} className={iconStyle} />
+          </div>
           <button
             onClick={toggleNewStudentModal}
             className="w-fit h-fit px-4 py-3 flex gap-2 rounded-md bg-blue-500 text-f-light font-medium"
           >
-            <span className="w-6 h-6 rounded-md bg-red-400"></span>
             New Student
           </button>
         </section>

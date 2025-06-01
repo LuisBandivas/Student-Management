@@ -2,6 +2,14 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { NavDesign } from "../assets/design/ButtonStyles";
 
+// Icons
+import { RxDashboard } from "react-icons/rx";
+import { HiOutlineUserGroup } from "react-icons/hi2";
+import { LiaBookSolid } from "react-icons/lia";
+import { IoCalendarOutline } from "react-icons/io5";
+import { MdLogout } from "react-icons/md";
+import { TbLayoutSidebarRightExpand } from "react-icons/tb";
+
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const {
@@ -31,10 +39,14 @@ const Sidebar = () => {
         >
           BRANDING
         </h6>
-        <button
-          onClick={toggleSidebar}
-          className="bg-slate-500 rounded-md p-3"
-        ></button>
+        <button onClick={toggleSidebar}>
+          <TbLayoutSidebarRightExpand
+            size={24}
+            className={`${
+              collapsed ? "rotate-180" : "rotate-0"
+            } transition-all duration-700`}
+          />
+        </button>
       </header>
       <section className="w-full h-fit flex flex-col gap-1 px-5 mt-10">
         <NavLink
@@ -45,9 +57,9 @@ const Sidebar = () => {
         >
           {({ isActive }) => (
             <>
-              <div
+              <RxDashboard
                 className={isActive ? activeIconStyle : inactiveIconStyle}
-              ></div>
+              />
               {!collapsed && <span>Dashboard</span>}
             </>
           )}
@@ -60,9 +72,9 @@ const Sidebar = () => {
         >
           {({ isActive }) => (
             <>
-              <div
+              <HiOutlineUserGroup
                 className={isActive ? activeIconStyle : inactiveIconStyle}
-              ></div>
+              />
               {!collapsed && <span>Enrolled Students</span>}
             </>
           )}
@@ -75,9 +87,9 @@ const Sidebar = () => {
         >
           {({ isActive }) => (
             <>
-              <div
+              <LiaBookSolid
                 className={isActive ? activeIconStyle : inactiveIconStyle}
-              ></div>
+              />
               {!collapsed && <span>My Subjects</span>}
             </>
           )}
@@ -90,9 +102,9 @@ const Sidebar = () => {
         >
           {({ isActive }) => (
             <>
-              <div
+              <IoCalendarOutline
                 className={isActive ? activeIconStyle : inactiveIconStyle}
-              ></div>
+              />
               {!collapsed && <span>Schedule</span>}
             </>
           )}
@@ -107,9 +119,9 @@ const Sidebar = () => {
         >
           {({ isActive }) => (
             <>
-              <div
+              <MdLogout
                 className={isActive ? activeIconStyle : inactiveIconStyle}
-              ></div>
+              />
               {!collapsed && <span>Logout</span>}
             </>
           )}

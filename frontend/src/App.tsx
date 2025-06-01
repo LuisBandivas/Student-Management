@@ -2,9 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import Store from "./Store/Store";
 
-import { MainPage } from "./pages";
-// Authentication Pages
-import { AuthPage, Login, Signup } from "./pages/Authentication";
+import { MainPage, LoginPage } from "./pages";
 //Teacher Pages
 import {
   Dashboard,
@@ -18,11 +16,8 @@ function App() {
   const AppRoute = () => {
     return (
       <Routes>
-        {/* Authentication Routes */}
-        <Route path="/auth" element={<AuthPage />}>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="signup" element={<Signup />}></Route>
-        </Route>
+        {/* Authentication Route*/}
+        <Route path="/login" element={<LoginPage />} />
 
         {/* Teacher Routes */}
         <Route path="/" element={<MainPage />}>
